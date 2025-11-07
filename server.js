@@ -1,56 +1,75 @@
-const express = require('express'); // для создания сервера
-const mysql = require('mysql2'); // для работы с базой данных MySQL
-const cors = require('cors'); // чтобы фронтенд мог общаться с сервером
-const path = require('path'); //для работы с путями к файлам
-//Создаем экземпляр приложения Express и указала порт 3000 для сервера
+const express = require('express');
+const mysql = require('mysql2');
+const cors = require('cors');
+const path = require('path');
+
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // Используем порт от Railway или 3000
 
-app.use(cors()); //разрешаю запросы с любого домена
-app.use(express.json()); //сервер понимает JSON данные
-app.use(express.static(path.join(__dirname, '../'))); //раздаю статические файлы (HTML, CSS, JS)
+app.use(cors());
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public'))); // Исправлен путь
 
-//Подключаюсь к MySQL серверу из XAMPP. Использую стандартные настройки: localhost, пользователь root, без пароля
-const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: ''
-});
+// Настройки подключения к MySQL для Railway
+const dbConfig = {
+    host: process.env.MYSQLHOST || 'localhost',
+    user: process.env.MYSQLUSER || 'root',
+    password: process.env.MYSQLPASSWORD || '',
+    database: process.env.MYSQLDATABASE || 'my_plant_website',
+    port: process.env.MYSQLPORT || 3306
+};
+
+// Создаем подключение к базе данных
+const connection = mysql.createConnection(dbConfig);
 
 // Функция для инициализации базы данных
 function initializeDatabase() {
     connection.connect((err) => {
         if (err) {
             console.log('Ошибка подключения к MySQL:', err.message);
+            // Переподключаемся через 5 секунд
+            setTimeout(initializeDatabase, 5000);
             return;
         }
         console.log('Подключение к MySQL серверу успешно!');
+        console.log('Настройки подключения:', {
+            host: dbConfig.host,
+            database: dbConfig.database,
+            port: dbConfig.port
+        });
 
-        // Создаем базу данных если не существует
-        connection.query('CREATE DATABASE IF NOT EXISTS my_plant_website', (err) => {
-            if (err) {
-                console.log('Ошибка создания БД:', err.message);
-                return;
-            }
-            console.log('База данных my_plant_website создана/уже существует');
-
-            // Переключаемся на созданную базу данных
-            connection.query('USE my_plant_website', (err) => {
+        // Создаем базу данных если не существует (только для локальной разработки)
+        if (dbConfig.host === 'localhost') {
+            connection.query('CREATE DATABASE IF NOT EXISTS my_plant_website', (err) => {
                 if (err) {
-                    console.log('Ошибка выбора БД:', err.message);
+                    console.log('Ошибка создания БД:', err.message);
                     return;
                 }
-                console.log('Используем базу данных my_plant_website');
-
-                // Создаем 2 таблицы
-                createTables();
+                console.log('База данных my_plant_website создана/уже существует');
+                useDatabase();
             });
-        });
+        } else {
+            // На Railway база уже создана, просто используем ее
+            useDatabase();
+        }
+    });
+}
+
+function useDatabase() {
+    connection.query('USE my_plant_website', (err) => {
+        if (err) {
+            console.log('Ошибка выбора БД:', err.message);
+            // Если базы нет, создаем таблицы в текущей базе
+            createTables();
+            return;
+        }
+        console.log('Используем базу данных my_plant_website');
+        createTables();
     });
 }
 
 function createTables() {
-    //Таблица 1: Пользователи (для авторизации)
+    // Таблица 1: Пользователи
     const createUsersTable = `
         CREATE TABLE IF NOT EXISTS users (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -61,7 +80,7 @@ function createTables() {
         )
     `;
     
-    //Таблица 2: Заказы (включает в себя информацию о товарах)
+    // Таблица 2: Заказы
     const createOrdersTable = `
         CREATE TABLE IF NOT EXISTS orders (
             id INT AUTO_INCREMENT PRIMARY KEY,
@@ -89,14 +108,14 @@ function createTables() {
     });
 }
 
-// Регистрация
-app.post('/api/auth/register', (req, res) => { //обработка регистрации
-    const { name, email, password } = req.body; //. Эта строка извлекает отдельные переменные
+// Остальные endpoints остаются без изменений
+app.post('/api/auth/register', (req, res) => {
+    const { name, email, password } = req.body;
 
-    if (!email || !email.includes('@')) { //проверка, что email заполнен и содержит символ '@'
+    if (!email || !email.includes('@')) {
         return res.status(400).json({ error: 'Пожалуйста, введите корректный email!' });
     }
-//SQL запрос для проверки существования пользователя с таким email.? -это placeholder, который безопасно подставляет значение из массива email
+
     const checkUser = "SELECT * FROM users WHERE email = ?";
     connection.query(checkUser, [email], (err, results) => {
         if (err) {
@@ -122,7 +141,7 @@ app.post('/api/auth/register', (req, res) => { //обработка регист
     });
 });
 
-app.post('/api/auth/login', (req, res) => { //обработка входа
+app.post('/api/auth/login', (req, res) => {
     const { email, password } = req.body;
 
     const findUser = "SELECT * FROM users WHERE email = ? AND password = ?";
@@ -144,7 +163,6 @@ app.post('/api/auth/login', (req, res) => { //обработка входа
     });
 });
 
-// Сохранение заказа
 app.post('/api/orders', (req, res) => {
     const { user_id, customer_name, customer_phone, customer_note, products, total_amount } = req.body;
 
@@ -152,34 +170,28 @@ app.post('/api/orders', (req, res) => {
         return res.status(400).json({ error: 'Заполните обязательные поля: имя, телефон и товары!' });
     }
 
-    // Сохраняем каждый товар как отдельный заказ
     const insertOrder = `
         INSERT INTO orders (user_id, customer_name, customer_phone, customer_note, product_name, product_price, quantity, total_amount, status) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pending')
     `;
     
-    // Для простоты сохраняем первый товар из корзины
     let productName = 'Товар';
     let productPrice = 0;
     let quantity = 1;
 
     if (Array.isArray(products) && products.length > 0) {
-        // Если пришел массив товаров
         const product = products[0];
         productName = product.name || 'Товар';
         productPrice = parseFloat(product.price) || 0;
         quantity = parseInt(product.quantity) || 1;
     } else if (typeof products === 'string') {
-        // Если пришла строка (старый формат)
         productName = products;
     } else if (products && typeof products === 'object') {
-        // Если пришел объект
         productName = products.name || 'Товар';
         productPrice = parseFloat(products.price) || 0;
         quantity = parseInt(products.quantity) || 1;
     }
-    //SQL запрос, подставляя значения вместо ?
-    //Использую || для default значений: если user_id нет - ставим null(гостевой заказ), если нет комментария - пустую строку
+
     connection.query(insertOrder, [
         user_id || null,
         customer_name,
@@ -203,13 +215,11 @@ app.post('/api/orders', (req, res) => {
     });
 });
 
-// Получение заказов пользователя
-//GET endpoint с параметром URL. :user_id означает, что ID пользователя передается в URL
 app.get('/api/orders/:user_id', (req, res) => {
     const userId = req.params.user_id;
-    const getOrders = "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC"; //отсортировать по дате создания, сначала новые
+    const getOrders = "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC";
     
-    connection.query(getOrders, [userId], (err, results) => { //запрос sql, массив значений, возврат (ошибка или результат)
+    connection.query(getOrders, [userId], (err, results) => {
         if (err) {
             return res.status(500).json({ error: 'Ошибка загрузки заказов' });
         }
@@ -217,17 +227,16 @@ app.get('/api/orders/:user_id', (req, res) => {
     });
 });
 
-// Тестовые endpoints для проверки
 app.get('/api/test', (req, res) => {
     res.json({ 
         message: 'Сервер работает успешно!', 
         tables: ['users', 'orders'],
         status: 'OK',
-        database: 'MySQL'
+        database: 'MySQL',
+        environment: process.env.NODE_ENV || 'development'
     });
 });
 
-// Проверка подключения к базе данных
 app.get('/api/check-db', (req, res) => {
     connection.query('SELECT 1 as test', (err, results) => {
         if (err) {
@@ -241,7 +250,6 @@ app.get('/api/check-db', (req, res) => {
     });
 });
 
-// Получение списка пользователей (для тестирования)
 app.get('/api/users', (req, res) => {
     connection.query('SELECT id, name, email, created_at FROM users', (err, results) => {
         if (err) {
@@ -251,7 +259,6 @@ app.get('/api/users', (req, res) => {
     });
 });
 
-// Получение всех заказов (для тестирования)
 app.get('/api/all-orders', (req, res) => {
     connection.query('SELECT * FROM orders ORDER BY created_at DESC', (err, results) => {
         if (err) {
@@ -261,12 +268,20 @@ app.get('/api/all-orders', (req, res) => {
     });
 });
 
-//создание БД и таблицы,если их нет
-//запуск сервера на указанном порту.Console.log выводят информацию для разработчика.
+// Обработка ошибок подключения к БД
+connection.on('error', (err) => {
+    console.log('Ошибка MySQL:', err);
+    if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+        console.log('Переподключаемся к базе данных...');
+        initializeDatabase();
+    }
+});
+
+// Инициализация базы данных и запуск сервера
 initializeDatabase();
 
 app.listen(PORT, () => {
-    console.log(`Сервер запущен на http://localhost:${PORT}`);
+    console.log(`Сервер запущен на порту ${PORT}`);
     console.log('Используется MySQL база данных');
     console.log('Создано 2 таблицы: users и orders');
     console.log('Доступные API endpoints:');
@@ -274,5 +289,5 @@ app.listen(PORT, () => {
     console.log('/api/check-db - Проверка базы данных');
     console.log('/api/auth/register - Регистрация');
     console.log('/api/auth/login - Вход');
-    console.log('/api/all-orders - Создание заказа');
+    console.log('/api/orders - Создание заказа');
 });
