@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Zelaina — Корзина</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Отключаем анимации для корзины */
+        .cart-item {
+            animation: none !important;
+            transform: none !important;
+        }
+
+        .cart-summary {
+            animation: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="logo" href="index.html">
+                <img src="images/logo.png" alt="Логотип Zelaina">
+                <span class="shop-name">ZELAINA</span>
+            </a>
+
+            <nav class="main-nav" aria-label="Главное меню">
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="product.html">Каталог</a></li>
+                    <li><a href="cart.html" class="active" aria-current="page">Корзина</a></li>
+                    <li><a href="auth.html">Вход</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>Корзина и оформление заказа</h1>
+
+        <div class="checkout-layout">
+            <!-- Блок корзины -->
+            <section class="cart-section">
+                <h2>Ваши выбранные товары</h2>
+                <div class="cart-summary">
+                    <!-- Здесь будет выводиться список товаров из корзины -->
+                </div>
+            </section>
+
+            <!-- Блок формы заказа -->
+            <section class="order-section">
+                <h2>Оформление заказа</h2>
+
+                <form class="feedback-form" action="#" method="post" novalidate>
+                    <div class="form-row">
+                        <label for="client-name">Ваше имя</label>
+                        <input id="client-name" name="name" type="text" required>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="client-phone">Ваш телефон</label>
+                        <input id="client-phone" name="phone" type="tel" placeholder="+7 (___) ___-__-__" required>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="client-note">Комментарий (адрес, удобное время)</label>
+                        <textarea id="client-note" name="note" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <button type="submit" class="btn btn-primary">Оформить заказ</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-contacts">
+                <p><strong>Телефон:</strong> +7 (912) 123-45-67</p>
+                <p><strong>Адрес:</strong> Санкт-Петербург, ул. Цветочная, 10</p>
+                <p class="slogan">Создаем уют в вашем доме!</p>
+            </div>
+            <div class="copyright">&copy; 2025 Zelaina. Все права защищены.</div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

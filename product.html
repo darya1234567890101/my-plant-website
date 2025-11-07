@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <!-- кодировка для русских символов -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- настройка адаптивности для мобильных -->
+    <title>Zelaina — Каталог</title>
+    <!-- заголовок страницы в браузере -->
+    <link rel="stylesheet" href="style.css">
+    <!-- подключение общих стилей -->
+</head>
+<body>
+
+    <!-- шапка сайта, одинаковая для всех страниц -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="logo" href="index.html">
+                <img src="images/logo.png" alt="Логотип Zelaina">
+                <span class="shop-name">ZELAINA</span>
+            </a>
+
+            <!-- основное меню навигации -->
+            <nav class="main-nav" aria-label="Главное меню">
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <!-- класс active показывает текущую страницу -->
+                    <li><a href="product.html" class="active" aria-current="page">Каталог</a></li>
+                    <li><a href="cart.html">Корзина</a></li>
+                    <li><a href="auth.html">Вход</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- основное содержимое страницы каталога -->
+    <main class="container catalog-page">
+        <h1>Наш каталог растений</h1>
+
+        <!-- макет каталога с фильтрами и товарами -->
+        <div class="catalog-layout">
+            <!-- боковая панель с фильтрами -->
+            <aside class="filters" aria-label="Фильтры">
+                <h3>Фильтры</h3>
+
+                <!-- группа фильтра по цене -->
+                <div class="filter-group">
+                    <label for="price">Цена</label>
+                    <!-- выпадающий список для выбора ценового диапазона -->
+                    <select id="price" name="price">
+                        <option value="all">Все</option>
+                        <option value="0-1000">до 1000 руб.</option>
+                        <option value="1000-2000">1000–2000 руб.</option>
+                        <option value="2000+">свыше 2000 руб.</option>
+                    </select>
+                </div>
+
+                <!-- группа фильтра по размеру -->
+                <div class="filter-group">
+                    <label for="size">Размер</label>
+                    <select id="size" name="size">
+                        <option value="any">Любой</option>
+                        <option value="small">Маленькие</option>
+                        <option value="medium">Средние</option>
+                        <option value="large">Большие</option>
+                    </select>
+                </div>
+
+                <!-- кнопка применения фильтров -->
+                <button class="filter-btn" type="button">Применить</button>
+            </aside>
+
+            <!-- сетка с карточками товаров -->
+            <section class="catalog-grid" aria-label="Товары">
+                <!-- карточка товара 1 -->
+                <!-- data-атрибуты используются для фильтрации в javascript -->
+                <article class="product-card" data-id="p1" data-price="2500" data-size="large">
+                    <img src="images/plant1.jpg" alt="Монстера деликатесная" class="product-img">
+                    <div class="product-body">
+                        <h3 class="product-title">Монстера деликатесная</h3>
+                        <p class="product-desc">Крупное тропическое растение с декоративными листьями.</p>
+                        <div class="product-meta">
+                            <span class="product-height">Высота: 120 см</span>
+                            <span class="product-price">2 500 руб.</span>
+                        </div>
+                        <div class="product-actions">
+                            <!-- кнопка добавления в корзину с data-атрибутами для javascript -->
+                            <button class="btn add-cart" type="button"
+                                    data-name="Монстера деликатесная"
+                                    data-price="2500">
+                                Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- остальные карточки товаров имеют аналогичную структуру -->
+                <article class="product-card" data-id="p2" data-price="1800" data-size="medium">
+                    <img src="images/plant2.jpg" alt="Фикус Бенджамина" class="product-img">
+                    <div class="product-body">
+                        <h3 class="product-title">Фикус Бенджамина</h3>
+                        <p class="product-desc">Изящное дерево с мелкими листьями.</p>
+                        <div class="product-meta">
+                            <span class="product-height">Высота: 90 см</span>
+                            <span class="product-price">1 800 руб.</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn add-cart" type="button"
+                                    data-name="Фикус Бенджамина"
+                                    data-price="1800">
+                                Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="product-card" data-id="p3" data-price="1200" data-size="small">
+                    <img src="images/plant3.jpg" alt="Замиокулькас" class="product-img">
+                    <div class="product-body">
+                        <h3 class="product-title">Замиокулькас</h3>
+                        <p class="product-desc">Неприхотливое растение с глянцевыми листьями.</p>
+                        <div class="product-meta">
+                            <span class="product-height">Высота: 60 см</span>
+                            <span class="product-price">1 200 руб.</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn add-cart" type="button"
+                                    data-name="Замиокулькас"
+                                    data-price="1200">
+                                Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="product-card" data-id="p4" data-price="900" data-size="small">
+                    <img src="images/plant4.jpg" alt="Спатифиллум" class="product-img">
+                    <div class="product-body">
+                        <h3 class="product-title">Спатифиллум</h3>
+                        <p class="product-desc">Цветущее растение с белыми цветами.</p>
+                        <div class="product-meta">
+                            <span class="product-height">Высота: 50 см</span>
+                            <span class="product-price">900 руб.</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn add-cart" type="button"
+                                    data-name="Спатифиллум"
+                                    data-price="900">
+                                Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="product-card" data-id="p5" data-price="2100" data-size="large">
+                    <img src="images/plant5.jpg" alt="Драцена Маргината" class="product-img">
+                    <div class="product-body">
+                        <h3 class="product-title">Драцена Маргината</h3>
+                        <p class="product-desc">Элегантная драцена для интерьера.</p>
+                        <div class="product-meta">
+                            <span class="product-height">Высота: 100 см</span>
+                            <span class="product-price">2 100 руб.</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn add-cart" type="button"
+                                    data-name="Драцена Маргината"
+                                    data-price="2100">
+                                Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" data-id="p6" data-price="600" data-size="small">
+                    <img src="images/plant6.jpg" alt="Алоэ Вера" class="product-img">
+                    <div class="product-body">
+                        <h3 class="product-title">Алоэ Вера</h3>
+                        <p class="product-desc">Полезное суккулентное растение с интересными листьями.</p>
+                        <div class="product-meta">
+                            <span class="product-height">Высота: 40 см</span>
+                            <span class="product-price">600 руб.</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn add-cart" type="button"
+                                    data-name="Алоэ Вера"
+                                    data-price="600">
+                                Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" data-id="p7" data-price="450" data-size="small">
+                    <img src="images/plant7.jpg" alt="Хлорофитум" class="product-img">
+                    <div class="product-body">
+                        <h3 class="product-title">Хлорофитум</h3>
+                        <p class="product-desc">
+                            Неприхотливое растение с длинными узкими листьями и детками-побегами
+                        </p>
+                        <div class="product-meta">
+                            <span class="product-height">Высота: 30 см</span>
+                            <span class="product-price">450 руб.</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn add-cart" type="button"
+                                    data-name="Хлорофитум"
+                                    data-price="450">
+                                Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" data-id="p8" data-price="3400" data-size="large">
+                    <img src="images/plant8.jpg" alt="Фикус Лирата" class="product-img">
+                    <div class="product-body">
+                        <h3 class="product-title">Фикус Лирата</h3>
+                        <p class="product-desc">
+                            Эффектное растение с крупными кожистыми листьями, похожими на лиру.
+                        </p>
+                        <div class="product-meta">
+                            <span class="product-height">Высота: 110 см</span>
+                            <span class="product-price">3400 руб.</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn add-cart" type="button"
+                                    data-name="Фикус Лирата"
+                                    data-price="3400">
+                                Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" data-id="p9" data-price="800" data-size="small">
+                    <img src="images/plant9.jpg" alt="Сансевиерия" class="product-img">
+                    <div class="product-body">
+                        <h3 class="product-title">Сансевиерия</h3>
+                        <p class="product-desc">
+                            Очень выносливое растение с вертикальными пестрыми листьями.
+                        </p>
+                        <div class="product-meta">
+                            <span class="product-height">Высота: 50 см</span>
+                            <span class="product-price">800 руб.</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn add-cart" type="button"
+                                    data-name="Сансевиерия"
+                                    data-price="800">
+                                Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" data-id="p10" data-price="1500" data-size="small">
+                    <img src="images/plant10.jpg" alt="Антуриум" class="product-img">
+                    <div class="product-body">
+                        <h3 class="product-title">Антуриум </h3>
+                        <p class="product-desc">
+                            Яркое цветущее растение с глянцевыми цветами-сердечками.
+                        </p>
+                        <div class="product-meta">
+                            <span class="product-height">Высота: 45 см</span>
+                            <span class="product-price">1500 руб.</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn add-cart" type="button"
+                                    data-name="Антуриум"
+                                    data-price="1500">
+                                Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" data-id="p11" data-price="550" data-size="small">
+                    <img src="images/plant11.jpg" alt="Каланхоэ" class="product-img">
+                    <div class="product-body">
+                        <h3 class="product-title">Каланхоэ </h3>
+                        <p class="product-desc">
+                            Компактный цветущий суккулент с яркими соцветиями.
+                        </p>
+                        <div class="product-meta">
+                            <span class="product-height">Высота: 25 см</span>
+                            <span class="product-price">550 руб.</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn add-cart" type="button"
+                                    data-name="Каланхоэ"
+                                    data-price="550">
+                                Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                </article>
+                <article class="product-card" data-id="p12" data-price="750" data-size="small">
+                    <img src="images/plant12.jpg" alt="Пеперомия" class="product-img">
+                    <div class="product-body">
+                        <h3 class="product-title">Пеперомия </h3>
+                        <p class="product-desc">
+                            Крупное растение с декоративными пестрыми листьями.
+                        </p>
+                        <div class="product-meta">
+                            <span class="product-height">Высота: 20 см</span>
+                            <span class="product-price">750 руб.</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn add-cart" type="button"
+                                    data-name="Пеперомия"
+                                    data-price="750">
+                                Добавить в корзину
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            </section>
+        </div>
+    </main>
+
+    <!-- подвал сайта -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-contacts">
+                <p><strong>Телефон:</strong> +7 (912) 123-45-67</p>
+                <p><strong>Адрес:</strong> Санкт-Петербург, ул. Цветочная, 10</p>
+                <p class="slogan">Создаем уют в вашем доме!</p>
+            </div>
+            <div class="copyright">&copy; 2025 Zelaina. Все права защищены.</div>
+        </div>
+    </footer>
+
+    <!-- сначала подключаем основной скрипт -->
+    <script src="script.js"></script>
+</body>
+</html>

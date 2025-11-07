@@ -1,0 +1,1373 @@
+﻿@charset "UTF-8";
+
+:root {
+    /*переменные - цвета и размеры*/
+    --green: #2d5a2d; /* Основной зеленый цвет */
+    --green-dark: #244b24; /* Темно-зеленый для ховеров */
+    --bg: #f7f8f6; /* Цвет фона страницы */
+    --text: #222; /* Цвет основного текста */
+    --muted: #666; /* Второстепенный текст */
+    --white: #fff; /* Белый цвет */
+    --radius: 10px; /* Радиус скругления углов */
+    --container: 1100px; /* Максимальная ширина контейнера */
+}
+
+/* сброс стилей по умолчанию */
+/* Убираем все отступы и границы у всех элементов */
+* {
+    padding: 0px;
+    margin: 0px;
+    border: none;
+}
+
+    /* Для всех элементов включаем border-box для удобства расчетов */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
+
+/* сброс стилей для ссылок */
+/* Убираем подчеркивание у всех ссылок */
+a, a:link, a:visited {
+    text-decoration: none;
+}
+
+    /* Убираем подчеркивание при наведении */
+    a:hover {
+        text-decoration: none;
+    }
+
+/*  сброс стилей для основных элементов  */
+aside, nav, footer, header, section, main {
+    display: block;
+}
+
+/* Сбрасываем стили заголовков и параграфов */
+h1, h2, h3, h4, h5, h6, p {
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+/* Убираем маркеры у списков */
+ul, ul li {
+    list-style: none;
+}
+
+/* Исправляем выравнивание изображений */
+img {
+    vertical-align: top;
+}
+
+/* Делаем изображения адаптивными */
+img, svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Сбрасываем курсив у address */
+address {
+    font-style: normal;
+}
+
+/* сброс стилей для форм */
+/* Наследуем шрифты у формных элементов */
+input, textarea, button, select {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background-color: transparent;
+}
+
+    input::-ms-clear {
+        display: none;
+    }
+
+    /* Сбрасываем стили кнопок */
+    button, input[type="submit"] {
+        display: inline-block;
+        box-shadow: none;
+        background-color: transparent;
+        background: none;
+        cursor: pointer;
+    }
+
+        input:focus, input:active,
+        button:focus, button:active {
+            outline: none;
+        }
+
+        /* Исправление для Firefox */
+        button::-moz-focus-inner {
+            padding: 0;
+            border: 0;
+        }
+
+/* Курсор-указатель для label */
+label {
+    cursor: pointer;
+}
+
+/* Блочное отображение для legend */
+legend {
+    display: block;
+}
+
+/* Ограничение ширины для file input */
+input[type='file'] {
+    max-width: 100%;
+}
+
+/* базоывые стили для страницы */
+/* Высота 100% для html и body */
+html, body {
+    height: 100%;
+}
+
+/* Основные стили body */
+body {
+    margin: 0;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased; /* Сглаживание в WebKit (Chrome, Safari, Edge, Opera)*/
+    -moz-osx-font-smoothing: grayscale; /* Сглаживание в Firefox */
+    line-height: 1.45; /* Межстрочный интервал */
+}
+
+/* вспомогательные классы */
+/* Класс-контейнер для центрирования контента */
+.container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* БАЗОВЫЕ СТИЛИ ДЛЯ ССЫЛОК И КНОПОК */
+/* Наследование цвета для ссылок */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Наследование шрифта для кнопок */
+button {
+    font: inherit;
+}
+
+/* СТИЛИ ДЛЯ ФОКУСА (ДОСТУПНОСТЬ) */
+/* Помогает понять, где сейчас фокус */
+:focus {
+    outline: 3px solid rgba(45,90,45,0.18);
+    outline-offset: 2px;
+}
+
+    /* Убираем outline когда не нужно (новые браузеры) */
+    :focus:not(:focus-visible) {
+        outline: none;
+    }
+
+/* СТИЛИ ЗАГОЛОВКОВ */
+/* Заголовок первого уровня */
+h1 {
+    margin: 22px 0; /*Внешние отступы вокруг элемента*/
+    color: var(--green);
+    font-size: 1.8rem; /*в 1.8 раза больше базового размера шрифта страницы*/
+}
+
+/* Заголовок второго уровня */
+h2 {
+    margin: 14px 0;
+    color: var(--green);
+    font-size: 1.2rem;
+}
+
+/* ШАПКА САЙТА */
+/* Основной блок шапки */
+.site-header {
+    background: var(--green);
+    color: var(--white);
+}
+
+/* Внутренний контейнер шапки */
+.header-inner {
+    display: flex; /*в одну строку */
+    align-items: center; /*Выравнивает элементы по вертикали по центру*/
+    justify-content: space-between; /*Распределяет пространство по горизонтали (логотип прижимается к левому краю, навигация прижимается к правому краю ,свободное пространство между ними*/
+    gap: 20px; /*Отступ между логотипом и навигацией*/
+    max-width: var(--container); /*Шапка не будет растягиваться шире 1100px*/
+    margin: 0 auto; /*внешние отступы (0 сверху/снизу), auto по бокам (ентрирует блок по горизонтали)*/
+    padding: 14px 20px; /*Внутренние отступы: 14px сверху/снизу, 20px слева/справа*/
+}
+
+/* Стили логотипа */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--white);
+}
+
+    /* Изображение логотипа */
+    .logo img {
+        height: 48px;
+        width: auto;
+        display: block; /*Изображение ведет себя как блок, а не как текст*/
+    }
+
+/* Название магазина */
+.shop-name {
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 1.05rem;
+}
+
+/*  ГЛАВНАЯ НАВИГАЦИЯ  */
+/* Список навигации */
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 18px;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+/* Ссылки навигации */
+.main-nav a {
+    color: var(--white);
+    padding: 6px 4px;
+    display: inline-block;
+}
+
+    /* Активная ссылка навигации */
+    .main-nav a.active {
+        border-bottom: 2px solid rgba(255,255,255,0.95);
+        padding-bottom: 4px;
+    }
+
+/*  ОСНОВНОЕ СОДЕРЖИМОЕ  */
+/* Основной контент внутри контейнера */
+main.container {
+    padding: 20px 0 60px;
+}
+
+/* ГЛАВНЫЙ ГЕРОЙ-БЛОК (ключевой визуальный элемент) */
+/* Блок с главным заголовком */
+.hero {
+    text-align: center;
+    margin: 40px auto 20px;
+    color: #1f3d1f;
+    max-width: 800px;
+}
+
+    /* Заголовок в герое */
+    .hero h1 {
+        font-size: 2em;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+/* Подзаголовок героя */
+.hero-subtitle {
+    font-size: 1.1em;
+    color: #355835;
+    line-height: 1.5;
+}
+
+/*  БЛОК ПРЕИМУЩЕСТВ  */
+/* Компактный список преимуществ */
+.advantages-list.compact {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px 25px;
+    list-style: none;
+    padding: 0;
+    margin: 25px auto 40px;
+    max-width: 900px;
+}
+
+    /* Элемент списка преимуществ */
+    .advantages-list.compact li {
+        background: #f8fbf8;
+        border-radius: 8px;
+        padding: 10px 16px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        font-size: 1em;
+        color: #2d5a2d;
+        transition: transform 0.3s ease;
+    }
+
+        /* Анимация при наведении на преимущество */
+        .advantages-list.compact li:hover {
+            transform: translateY(-2px);
+        }
+
+/*  ГАЛЕРЕЯ РАСТЕНИЙ  */
+/* Сетка галереи */
+.gallery {
+    display: grid; /*Создает сетку для элементов галереи*/
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px; /*Расстояние между элементами сетки */
+    justify-items: center; /*Выравнивает элементы по горизонтали внутри своих ячеек (каждая картинка центрируется в своей ячейке сетки*/
+    padding: 0 20px 60px; /*Внутренние отступы: сверху слева/справа ,снизу*/
+    max-width: 1100px; /*Максимальная ширина галереи - 1100px*/
+    margin: 0 auto; /*Центрирует галерею по горизонтали*/
+}
+
+    /* Изображения в галерее */
+    .gallery img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+        border-radius: 14px; /*для скругления углов элементов*/
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        /* Анимация при наведении на изображение */
+        .gallery img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+        }
+
+/* ПОДВАЛ САЙТА */
+/* Основной блок подвала */
+.site-footer {
+    background: var(--green);
+    color: var(--white);
+    margin-top: 30px;
+    padding: 18px 0;
+}
+
+    /* Внутренний контейнер подвала */
+    .site-footer .footer-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+/* Контакты в подвале */
+.footer-contacts p {
+    margin: 6px 0;
+    color: rgba(255,255,255,0.95);
+}
+
+/* Слоган в подвале */
+.slogan {
+    font-style: italic;
+    margin-top: 4px;
+}
+
+/*  СТРАНИЦА КАТАЛОГА  */
+/* Заголовок страницы каталога */
+.catalog-page h1 {
+    margin-top: 6px;
+}
+
+/* Макет страницы каталога */
+.catalog-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 26px;
+    align-items: start;
+    margin-top: 18px;
+}
+
+/*  ФИЛЬТРЫ В КАТАЛОГЕ  */
+/* Блок фильтров */
+.filters {
+    background: #fff;
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.04);
+    position: sticky;
+    top: 18px;
+}
+
+    /* Заголовок фильтров */
+    .filters h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+
+/* Группа фильтров */
+.filter-group {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+    /* Подпись фильтра */
+    .filter-group label {
+        font-size: 0.95rem;
+        color: var(--muted);
+    }
+
+/* Элементы формы в фильтрах */
+.filters select, .filters input {
+    padding: 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background: transparent;
+}
+
+/* Кнопка применения фильтров */
+.filter-btn {
+    background: var(--green);
+    color: white;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 0;
+    cursor: pointer;
+}
+
+/*  СЕТКА ТОВАРОВ  */
+/* Сетка карточек товаров */
+.catalog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
+    align-items: stretch; 
+}
+
+/*  КАРТОЧКА ТОВАРА  */
+/* Карточка товара */
+.product-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    transition: transform .12s ease, box-shadow .12s ease;
+    height: 100%; 
+}
+
+    /* Анимация при наведении на карточку */
+    .product-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    }
+
+/* Изображение товара */
+.product-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Тело карточки товара */
+.product-body {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1; /* Растягивается на всё доступное пространство */
+}
+
+/* Описание товара */
+.product-desc {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+    flex-grow: 1; /* Растягивает описание */
+}
+
+/* Блок с кнопками в карточке товара */
+.product-actions {
+    margin-top: auto; 
+    padding-top: 10px;
+}
+
+    /* Кнопка в карточке товара */
+    .product-actions .btn.add-cart {
+        width: 100%;
+    }
+
+/* Цена товара */
+.product-price {
+    color: var(--green);
+    font-weight: 700;
+}
+
+/*  ОСНОВНЫЕ СТИЛИ КНОПОК  */
+/* Базовая кнопка */
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 0;
+    cursor: pointer;
+    text-align: center;
+}
+
+    /* Кнопка "В корзину" */
+    .btn.add-cart {
+        background: var(--green);
+        color: #fff;
+    }
+
+    /* Контурная кнопка (если реализовать избранное)*/
+    .btn.btn-outline {
+        background: transparent;
+        border: 1px solid #e0e0e0;
+        color: var(--text);
+        padding: 7px 10px;
+        border-radius: 8px;
+    }
+
+/*  СТРАНИЦА КОРЗИНЫ И ОФОРМЛЕНИЯ  */
+/* Макет страницы корзины */
+.checkout-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+/* Секции корзины и оформления */
+.cart-section, .order-section {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/*  СТИЛИ ДЛЯ ТОВАРОВ В КОРЗИНЕ  */
+/* Контейнер товаров корзины */
+.cart-items {
+    margin-bottom: 20px;
+}
+
+/* Элемент корзины */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    gap: 15px;
+    animation: none;
+    transform: none;
+}
+
+/* Информация о товаре в корзине */
+.cart-item-info {
+    flex: 1;
+}
+
+/* Название товара в корзине */
+.cart-item-name {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+/* Цена товара в корзине */
+.cart-item-price {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Элементы управления количеством */
+.cart-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Кнопка изменения количества */
+.quantity-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--green);
+    background: white;
+    color: var(--green);
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    /* Анимация кнопки количества */
+    .quantity-btn:hover {
+        background: var(--green);
+        color: white;
+    }
+
+/* Отображение количества */
+.quantity {
+    min-width: 50px;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Итоговая стоимость позиции */
+.cart-item-total {
+    font-weight: 600;
+    min-width: 100px;
+    text-align: right;
+}
+
+/*  ФУТЕР КОРЗИНЫ  */
+/* Футер корзины */
+.cart-footer {
+    border-top: 2px solid #eee;
+    padding-top: 20px;
+}
+
+/* Итоговая сумма */
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2em;
+}
+
+/* Кнопка очистки корзины */
+.btn-clear {
+    background: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+    /* Анимация кнопки очистки */
+    .btn-clear:hover {
+        background: #5a6268;
+    }
+
+/*  КНОПКА ОФОРМЛЕНИЯ ЗАКАЗА  */
+/* Основная кнопка заказа */
+.btn-primary {
+    background: var(--green);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+
+    /* Анимация кнопки заказа */
+    .btn-primary:hover {
+        background: var(--green-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(45, 90, 45, 0.3);
+    }
+
+/*  ПУСТАЯ КОРЗИНА  */
+/* Стили для пустой корзины */
+.empty-cart {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+    /* Текст пустой корзины */
+    .empty-cart p {
+        color: #666;
+        margin-bottom: 20px;
+        font-size: 1.1em;
+    }
+
+/*  ФОРМЫ  */
+/* Основная форма */
+.feedback-form {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr;
+}
+
+/* Строка формы */
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Элементы формы */
+.feedback-form input,
+.feedback-form select,
+.feedback-form textarea {
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font: inherit;
+}
+
+/* Текстовое поле */
+.feedback-form textarea {
+    resize: vertical;
+    min-height: 72px;
+}
+
+/* Второстепенный текст */
+.muted {
+    color: var(--muted);
+}
+
+/*  СЕКЦИЯ МЕСТОПОЛОЖЕНИЯ  */
+/* Секция с картой */
+.location-section {
+    background: linear-gradient(135deg, #f8fbf8 0%, #e9f5e9 100%);
+    padding: 50px 20px;
+    margin-top: 40px;
+}
+
+/* Контент локации */
+.location-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+    /* Заголовок локации */
+    .location-content h2 {
+        color: var(--green);
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+
+/* Информация о локации */
+.location-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+}
+
+/* Карточка с информацией о магазине */
+.location-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+    /* Заголовок карточки локации */
+    .location-card h3 {
+        color: var(--green);
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 1.4rem;
+    }
+
+    /* Текст карточки локации */
+    .location-card p {
+        margin: 12px 0;
+        font-size: 1.1rem;
+        color: #555;
+    }
+
+/* Контейнер карты */
+.location-map {
+    height: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+/*  СТРАНИЦА АВТОРИЗАЦИИ  */
+/* Фон страницы авторизации */
+body.auth-page-body {
+    background: #f0f7f0;
+    min-height: 100vh;
+}
+
+/* Основной контейнер авторизации */
+.auth-page { /* Растянуть на всю страницу и центрировать форму по вертикали*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 60vh;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+/* Контейнер форм авторизации */
+.auth-container { /* Стилизовать саму форму авторизации*/
+    max-width: 400px;
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(45, 90, 45, 0.1);
+    overflow: hidden;
+    margin-top: 20px;
+}
+
+/* Заголовок авторизации */
+.auth-title {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--green);
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+/* Вкладки авторизации/регистрации */
+.auth-tabs {
+    display: flex;
+    border-bottom: 2px solid #e8f0e8;
+}
+
+/* Общие стили вкладки*/
+.auth-tab {
+    flex: 1;
+    padding: 16px;
+    background: none;
+    border: none;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--muted);
+}
+
+    /* Активная вкладка */
+    .auth-tab.active {
+        color: var(--green);
+        background: #f8fbf8;
+        border-bottom: 3px solid var(--green);
+    }
+
+    /* Неактивная вкладка при наведении */
+    .auth-tab:hover:not(.active) {
+        background: #f8f8f8; /* Светло-серый фон */
+        color: var(--text);
+    }
+
+/* Форма авторизации */
+.auth-form {
+    display: none;
+    padding: 25px;
+}
+
+    /* Активная форма */
+    .auth-form.active {
+        display: block;
+    }
+
+/* Строка формы авторизации */
+.form-row {
+    margin-bottom: 16px;
+}
+
+    /* Название поля (логин, пароль, email*/
+    .form-row label { 
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 500;
+        color: var(--text);
+        font-size: 0.9rem;
+    }
+
+    /* Поле ввода формы */
+    .form-row input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 2px solid #e8f0e8;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+        background: #fafefa;
+    }
+
+        /* Стили поля при фокусе */
+        .form-row input:focus {
+            outline: none;
+            border-color: var(--green);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(45, 90, 45, 0.1);
+        }
+
+/* Основное действие (войти или зарегистрироваться) */
+.auth-btn {
+    width: 100%;
+    padding: 10px;
+    background: var(--green);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 10px;
+}
+
+    /* Анимация кнопки авторизации */
+    .auth-btn:hover {
+        background: var(--green-dark);
+    }
+
+/* Переключатель форм */
+.auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+/* Второстепенное действие (переключить форму) */
+.switch-link {
+    color: var(--green);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+    /* Анимация ссылки-переключателя */
+    .switch-link:hover {
+        text-decoration: underline;
+    }
+
+/*  АДАПТИВНАЯ ВЕРСТКА ДЛЯ ПЛАНШЕТОВ  */
+@media (max-width: 1000px) {
+    /* На планшетах убираем боковые колонки */
+    .catalog-layout {
+        grid-template-columns: 1fr;
+    }
+
+    /* Фильтры становятся обычным блоком */
+    .filters {
+        position: relative;
+        top: auto;
+        order: 2;
+    }
+
+    /* Сетка товаров становится первой */
+    .catalog-grid {
+        order: 1;
+    }
+
+    /* Уменьшаем отступы шапки */
+    .header-inner {
+        padding: 12px 16px;
+    }
+
+    /* Уменьшаем заголовки */
+    h1 {
+        font-size: 1.4rem;
+    }
+}
+
+/*  АДАПТИВНАЯ ВЕРСТКА ДЛЯ МОБИЛЬНЫХ  */
+@media (max-width: 768px) {
+    /* Уменьшаем отступы контейнера */
+    .container {
+        padding: 0 15px;
+    }
+
+    /* Одноколоночный макет корзины */
+    .checkout-layout {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* Одноколоночный макет локации */
+    .location-info {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    /* Уменьшаем отступы карточки локации */
+    .location-card {
+        padding: 20px;
+    }
+
+    /* Уменьшаем заголовок локации */
+    .location-content h2 {
+        font-size: 1.5rem;
+    }
+
+    /* Уменьшаем высоту карты */
+    .location-map {
+        height: 250px;
+    }
+
+    /* Уменьшаем заголовок героя */
+    .hero h1 {
+        font-size: 1.6rem;
+    }
+
+    /* Уменьшаем подзаголовок героя */
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    /* Вертикальный список преимуществ */
+    .advantages-list.compact {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Двухколоночная галерея */
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        padding: 0 15px 40px;
+    }
+
+        /* Уменьшаем высоту изображений галереи */
+        .gallery img {
+            height: 200px;
+        }
+
+    /* Уменьшаем отступы секций корзины */
+    .cart-section, .order-section {
+        padding: 20px;
+    }
+}
+
+/*  АДАПТИВНАЯ ВЕРСТКА ДЛЯ МАЛЕНЬКИХ ЭКРАНОВ  */
+@media (max-width: 600px) {
+    /* Вертикальная шапка */
+    .header-inner {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+        padding: 12px;
+    }
+
+    /* Уменьшаем отступы навигации */
+    .main-nav ul {
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    /* Уменьшаем изображения галереи */
+    .gallery img {
+        height: 140px;
+    }
+
+    /* Уменьшаем изображения товаров */
+    .product-img {
+        height: 150px;
+    }
+
+    /* Уменьшаем логотип */
+    .logo img {
+        height: 40px;
+    }
+
+    /* Уменьшаем название магазина */
+    .shop-name {
+        font-size: 0.95rem;
+    }
+
+    /* Вертикальный подвал */
+    .site-footer .footer-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+    }
+
+    /* Вертикальная навигация */
+    .main-nav ul {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+
+    /* Блочные ссылки навигации */
+    .main-nav a {
+        padding: 8px 12px;
+        text-align: center;
+        width: 100%;
+        border-radius: 6px;
+    }
+
+        /* Активная ссылка с фоном */
+        .main-nav a.active {
+            background: rgba(255,255,255,0.1);
+            border-bottom: none;
+        }
+}
+
+/*  АДАПТИВНАЯ ВЕРСТКА ДЛЯ ОЧЕНЬ МАЛЕНЬКИХ ЭКРАНОВ  */
+@media (max-width: 480px) {
+    /* Растягиваем контейнер авторизации */
+    .auth-container {
+        margin: 0 15px;
+        max-width: 100%;
+    }
+
+    /* Уменьшаем отступы формы */
+    .auth-form {
+        padding: 20px;
+    }
+
+    /* Уменьшаем вкладки */
+    .auth-tab {
+        padding: 14px;
+        font-size: 0.95rem;
+    }
+
+    /* Уменьшаем заголовок авторизации */
+    .auth-title {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+
+    /* Уменьшаем поля ввода */
+    .form-row input {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+
+    /* Уменьшаем заголовки */
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    /* Уменьшаем отступы секций корзины */
+    .cart-section, .order-section {
+        padding: 20px 15px;
+    }
+
+    /* Вертикальные элементы корзины */
+    .cart-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 20px 0;
+    }
+
+    /* Отступы для контролов количества */
+    .cart-item-controls {
+        margin: 10px 0;
+    }
+
+    /* Выравнивание итога */
+    .cart-item-total {
+        text-align: left;
+        min-width: auto;
+    }
+
+    /* Вертикальный итог корзины */
+    .cart-total {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+
+    /* Уменьшаем кнопку заказа */
+    .btn-primary {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+
+    /* Одноколоночная галерея */
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+
+        /* Увеличиваем высоту изображений */
+        .gallery img {
+            height: 180px;
+        }
+
+    /* Полная ширина карточки товара */
+    .product-card {
+        max-width: 100%;
+    }
+}
+
+/*  ПАРАМЕТРЫ (СПЕЦИАЛЬНЫЕ) ДЛЯ IOS  */
+/* исправление увеличения шрифта в iOS 
+    На iPhone/iPad Safari автоматически увеличивает шрифт в полях ввода при масштабировании, что ломает верстку*/
+input, select, textarea {
+    font-size: 16px;
+}
+
+/*  АКТИВНЫЙ ПУНКТ МЕНЮ  */
+/* Стили для активной ссылки */
+.main-nav a[aria-current="page"],
+.main-nav a.active {
+    border-bottom: 2px solid rgba(255,255,255,0.95);
+    padding-bottom: 4px;
+}
+
+/*  АНИМАЦИИ  */
+/* Анимация появления ( Появление карточек товаров)*/
+@keyframes fadeIn { /*Плавное появление сверху*/
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Анимация пульсации (Кнопки при наведении)*/
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Анимация для карточек товаров */
+.product-card {
+    animation: fadeIn 0.6s ease-out;
+}
+
+/* Анимация пульсации для кнопок */
+.btn:hover {
+    animation: pulse 0.3s ease-in-out;
+}
+
+/* Плавные переходы для элементов */
+.product-card,
+.btn,
+.auth-form {
+    transition: all 0.3s ease;
+}
+
+/* Анимация добавления в корзину (кнопка "В корзину" после клика)*/
+@keyframes addToCart {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.95);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Класс для анимации добавления в корзину */
+.add-cart.added {
+    animation: addToCart 0.4s ease;
+    background: var(--green-dark);
+}
+
+/*  СТИЛИ ДЛЯ ПОГОДЫ И СОВЕТОВ  */
+/* Секция с погодой */
+.weather-section {
+    background: linear-gradient(135deg, #e8f5e8 0%, #d0ebd0 100%);
+    padding: 40px 20px;
+    margin: 40px 0;
+}
+
+/* Блок с советами по погоде */
+.weather-tips {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin: 20px 0;
+}
+
+    /* Заголовок советов */
+    .weather-tips h3 {
+        color: var(--green);
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+
+    /* Список советов */
+    .weather-tips ul {
+        list-style: none;
+        padding: 0;
+        margin: 15px 0 0 0;
+    }
+
+    /* Элемент списка советов */
+    .weather-tips li {
+        padding: 8px 0;
+        border-bottom: 1px solid #f0f0f0;
+        color: var(--text);
+    }
+
+        /* Убираем границу у последнего элемента */
+        .weather-tips li:last-child {
+            border-bottom: none;
+        }
+
+/* Факт о растениях */
+.plant-fact {
+    background: var(--green);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 500;
+    margin: 20px 0;
+    box-shadow: 0 4px 12px rgba(45, 90, 45, 0.3);
+}
+
+
+/* Класс для анимации загрузки */
+.loading {
+    animation: loading 1s linear infinite;
+    display: inline-block;
+}
+
+/*  ВАЛИДАЦИЯ ФОРМ  */
+/* Невалидное поле (ошибка)*/
+.form-row input:invalid {
+    border-color: #ff4444;
+}
+
+/* Валидное поле */
+.form-row input:valid {
+    border-color: #4CAF50;
+}
+
+/* Сообщение об ошибке */
+.error-message {
+    color: #ff4444;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    display: none;
+}
+
+/* Показываем сообщение при ошибке */
+.form-row.error .error-message {
+    display: block;
+}
+
+/* Глобальные стили для невалидных полей */
+input:invalid {
+    border-color: #ff4444;
+}
+
+/* Глобальные стили для валидных полей */
+input:valid {
+    border-color: #4CAF50;
+}

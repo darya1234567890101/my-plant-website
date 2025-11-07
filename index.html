@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- эта строка говорит браузеру что это HTML5 документ -->
+    <meta charset="utf-8">
+    <!-- кодировка символов, чтобы русские буквы отображались правильно -->
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <!-- настройка для мобильных устройств, чтобы сайт нормально масштабировался -->
+    <title>Zelaina — Главная</title>
+    <!-- заголовок вкладки в браузере -->
+    <link rel="stylesheet" href="style.css">
+    <!-- подключение файла со стилями -->
+</head>
+<body>
+
+    <!-- шапка сайта -->
+    <header class="site-header">
+        <div class="header-inner">
+            <!-- логотип с ссылкой на главную страницу -->
+            <a class="logo" href="index.html">
+                <img src="images/logo.png" alt="Логотип Zelaina">
+                <!-- alt - описание картинки для доступности и если картинка не загрузится -->
+                <span class="shop-name">ZELAINA</span>
+            </a>
+
+            <!-- основная навигация по сайту -->
+            <nav class="main-nav" aria-label="Главное меню">
+                <!-- aria-label - описание для скринридеров -->
+                <ul>
+                    <!-- класс active показывает текущую страницу -->
+                    <li><a href="index.html" class="active" aria-current="page">Главная</a></li>
+                    <li><a href="product.html">Каталог</a></li>
+                    <li><a href="cart.html">Корзина</a></li>
+                    <li><a href="auth.html">Вход</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- основное содержимое страницы -->
+    <main>
+        <!-- главный баннер -->
+        <section class="hero">
+            <h1>Добро пожаловать в мир растений!</h1>
+            <p class="hero-subtitle">
+                Украсьте интерьер и наполните дом свежестью с помощью наших комнатных растений.
+            </p>
+        </section>
+
+        <!-- блок с преимуществами -->
+        <section class="advantages">
+            <ul class="advantages-list compact">
+                <li>Проверенные экземпляры</li>
+                <li>Рекомендации по уходу</li>
+                <li>Быстрая доставка</li>
+                <li>Гарантия качества</li>
+            </ul>
+        </section>
+
+        <!-- галерея растений -->
+        <section class="gallery">
+            <!-- картинки растений, пути указаны относительно папки images -->
+            <img src="images/plant1.jpg" alt="Монстера">
+            <img src="images/plant2.jpg" alt="Фикус">
+            <img src="images/plant3.jpg" alt="Замиокулькас">
+            <img src="images/plant4.jpg" alt="Спатифиллум">
+        </section>
+
+        <!-- секция с картой -->
+        <section class="location-section">
+            <div class="location-content">
+                <h2>Посетите наш магазин в Санкт-Петербурге</h2>
+                <div class="location-info">
+                    <div class="map-card">
+                        <!-- контейнер для яндекс карты -->
+                        <div id="map" style="width: 100%; height: 400px; border-radius: 12px;"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- секция с погодой и советами -->
+        <section class="weather-section">
+            <div class="container">
+                <h2>Советы по уходу за растениями</h2>
+                <!-- сюда будет загружаться информация о погоде через javascript -->
+                <div id="weatherTips">
+                    <p>Загрузка советов по уходу...</p>
+                </div>
+                <!-- сюда будут загружаться случайные факты о растениях -->
+                <div id="plantFact"></div>
+            </div>
+        </section>
+
+        <!-- стили написанные html для этой конкретной страницы -->
+        <style>
+            .location-info {
+                display: flex;
+                gap: 30px;
+                align-items: stretch;
+                justify-content: center;
+            }
+
+            .map-card {
+                flex: 1;
+                background: white;
+                padding: 0;
+                border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                border: 1px solid #e0e0e0;
+                overflow: hidden;
+                max-width: 800px;
+            }
+
+            /* стили для мобильных устройств */
+            @media (max-width: 768px) {
+                .location-info {
+                    flex-direction: column;
+                }
+
+                #map {
+                    height: 300px;
+                }
+            }
+        </style>
+    </main>
+
+    <!-- подвал сайта -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-contacts">
+                <p><strong>Телефон:</strong> +7 (912) 123-45-67</p>
+                <p><strong>Адрес:</strong> Санкт-Петербург, ул. Цветочная, 10</p>
+                <p class="slogan">Создаем уют в вашем доме!</p>
+            </div>
+            <div class="copyright">&copy; 2025 Zelaina. Все права защищены.</div>
+        </div>
+    </footer>
+
+    <!-- подключение javascript файла -->
+    <script src="script.js"></script>
+</body>
+</html>
