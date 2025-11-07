@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Zelaina — Вход и регистрация</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="auth-page-body">
+    <!-- Специальный класс для фона страницы авторизации -->
+    <!-- шапка  -->
+    <header class="site-header">
+        <div class="header-inner">
+            <!-- лого и названиее -->
+            <a class="logo" href="index.html">
+                <img src="images/logo.png" alt="Логотип Zelaina">
+                <span class="shop-name">ZELAINA</span>
+            </a>
+
+            <!-- главная навигация -->
+            <nav class="main-nav" aria-label="Главное меню">
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="product.html">Каталог</a></li>
+                    <li><a href="cart.html">Корзина</a></li>
+                    <!-- Активная страница помечена специальным классом -->
+                    <li><a href="auth.html" class="active" aria-current="page">Вход</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- основное содержимое -->
+    <main class="container">
+        <div class="auth-page">
+            <!-- Контейнер для центрирования формы -->
+            <h1 class="auth-title">Вход в аккаунт</h1>
+
+            <!-- контейнер формы -->
+            <div class="auth-container">
+                <!-- переключатель между входом и регистрацией -->
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Вход</button>
+                    <button class="auth-tab" data-tab="register">Регистрация</button>
+                </div>
+
+                <!-- ФОРМА ВХОДА (видна по умолчанию) -->
+                <form id="loginForm" class="auth-form active">
+                    <div class="form-row">
+                        <label for="login-email">Email</label>
+                        <input id="login-email" name="email" type="email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-row">
+                        <label for="login-password">Пароль</label>
+                        <input id="login-password" name="password" type="password" required placeholder="Введите пароль">
+                    </div>
+                    <div class="form-row">
+                        <button type="submit" class="btn auth-btn">Войти</button>
+                    </div>
+                </form>
+
+                <!-- ФОРМА РЕГИСТРАЦИИ (скрыта по умолчанию) -->
+                <form id="registerForm" class="auth-form">
+                    <div class="form-row">
+                        <label for="reg-name">Ваше имя</label>
+                        <input id="reg-name" name="name" type="text" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="reg-email">Email</label>
+                        <input id="reg-email" name="email" type="email" required placeholder="your@email.com">
+                    </div>
+                    <div class="form-row">
+                        <label for="reg-password">Пароль</label>
+                        <input id="reg-password" name="password" type="password" required placeholder="Введите пароль" minlength="4">
+                    </div>
+                    <div class="form-row">
+                        <label for="reg-confirm-password">Подтверждение пароля</label>
+                        <input id="reg-confirm-password" name="confirmPassword" type="password" required placeholder="Повторите пароль" minlength="4">
+                    </div>
+                    <button type="submit" class="auth-btn">Зарегистрироваться</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- футер -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-contacts">
+                <p><strong>Телефон:</strong> +7 (912) 123-45-67</p>
+                <p><strong>Адрес:</strong> Санкт-Петербург, ул. Цветочная, 10</p>
+                <p class="slogan">Создаем уют в вашем доме!</p>
+            </div>
+            <div class="copyright">&copy; 2025 Zelaina. Все права защищены.</div>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
